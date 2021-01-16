@@ -1,12 +1,32 @@
-const store = require("../../../store/dummy");
-
+const { nanoid } = require("nanoid");
+const auth = require("../auth")
 const TABLA = "user";
 
-function list() {
-  return store.list(TABLA);
-}
-
-
-module.exports = {
-    list
-}
+module.exports = function (store = require("../../../store/dummy")) {
+  function list() {
+    return store.list(TABLA);
+  }
+  function get(id) {
+    return store.get(TABLA, id);
+  }
+  async function upsert(body) {
+    const user = {
+      id: body.id || nanoid(),
+      name: body.name,
+      username: body.username,
+    };
+    if(body.password || body.username){
+      await auth.upsert({
+        id:user.id,
+        username:user.username,
+        password:body.password
+      })
+    }
+    return store.upsert(TABLA, user);
+  }
+  return {
+    list,
+    get,
+    upsert,
+  };
+};

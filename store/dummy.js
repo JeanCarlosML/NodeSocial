@@ -5,17 +5,21 @@ const db = {
   user: [{ id: 1, name: "carlos" }],
 };
 
-function list(table) {
+async function list(table) {
   return db[table];
 }
-function get(table, id) {
-  let col = list(table);
+async function get(table, id) {
+  let col = await list(table);
   return col.find((item) => item.id == id);
 }
-function upsert(table, data) {
-  db[collection].push(data);
+async function upsert(table, data) {
+  if (!db[table]) {
+    db[table] = [];
+  }
+  db[table].push(data);
+  console.log(db)
 }
-function remove(table, id) {
+async function remove(table, id) {
   return true;
 }
 
