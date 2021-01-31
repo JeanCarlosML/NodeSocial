@@ -2,7 +2,7 @@
 const { Router } = require("express");
 const router = Router();
 const response = require("../../../network/response");
-const Controller = require("./auth-index");
+const Controller = require("./index");
 //Routes para ruta /api/user
 router.post("/login", login);
 

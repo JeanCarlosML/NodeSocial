@@ -3,7 +3,7 @@ const { Router } = require("express");
 const router = Router();
 const secure = require("./secure");
 const response = require("../../../network/response");
-const Controller = require("./user-index");
+const Controller = require("./index");
 //Routes para ruta /api/user
 router.get("/", list);
 router.get("/:id", get);
