@@ -1,12 +1,14 @@
 //El Network solo se comunica con el controlador
 const { Router } = require("express");
 const router = Router();
+const secure = require("./secure");
 const response = require("../../../network/response");
-const Controller = require("./index");
+const Controller = require("./user-index");
 //Routes para ruta /api/user
 router.get("/", list);
 router.get("/:id", get);
 router.post("/", upsert);
+router.put("/", secure("update"), upsert);
 
 function list(req, res) {
   Controller.list()

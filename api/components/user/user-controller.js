@@ -1,5 +1,5 @@
 const { nanoid } = require("nanoid");
-const auth = require("../auth")
+const auth = require("../auth");
 const TABLA = "user";
 
 module.exports = function (store = require("../../../store/dummy")) {
@@ -14,13 +14,15 @@ module.exports = function (store = require("../../../store/dummy")) {
       id: body.id || nanoid(),
       name: body.name,
       username: body.username,
+      role: body.role || "USER_ROLE",
     };
-    if(body.password || body.username){
+    if (body.password || body.username) {
       await auth.upsert({
-        id:user.id,
-        username:user.username,
-        password:body.password
-      })
+        id: user.id,
+        username: user.username,
+        password: body.password,
+        role: body.role || "USER_ROLE",
+      });
     }
     return store.upsert(TABLA, user);
   }
